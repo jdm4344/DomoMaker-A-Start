@@ -9,34 +9,34 @@ const convertId = mongoose.Types.ObjectId;
 const setName = (name) => _.escape(name).trim();
 
 const DomoSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true,
-        set: setName,
-    },
-    age: {
-        type: Number,
-        min: 0,
-        required: true,
-    },
-    owner: {
-        type: mongoose.Schema.ObjectId,
-        required: true,
-        ref: 'Account',
-    },
-    createdData: {
-        type: Date,
-        default: Date.now,
-    },
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    set: setName,
+  },
+  age: {
+    type: Number,
+    min: 0,
+    required: true,
+  },
+  owner: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+    ref: 'Account',
+  },
+  createdData: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 DomoSchema.statics.findByOwner = (ownerID, callback) => {
-    const search = {
-        owner: convertId(ownerID),
-    };
+  const search = {
+    owner: convertId(ownerID),
+  };
 
-    return DomoModel.find(search).select('name age').exec(callback);
+  return DomoModel.find(search).select('name age').exec(callback);
 };
 
 DomoModel = mongoose.model('Domo', DomoSchema);
